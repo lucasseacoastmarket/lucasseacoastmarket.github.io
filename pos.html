@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)file:///home/luca/Downloads/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS System</title>
+    <style>
+        body { font-family: 'Courier New', Courier, monospace; background: #f0f0f0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; display: flex; gap: 20px; }
+        .panel { background: white; padding: 20px; border: 1px solid #ccc; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        
+        /* Register Styles */
+        .register { flex: 1; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        
+        /* Button Styles */
+        button { width: 100%; padding: 10px; color: white; border: none; cursor: pointer; margin-top: 5px; font-weight: bold; border-radius: 4px; }
+        .btn-add { background: #333; }
+        .btn-add:hover { background: #555; }
+        .btn-print { background: #008000; margin-top: 20px; font-size: 1.1em; }
+        .btn-print:hover { background: #006400; }
+        .btn-clear { background: #a00; }
+        .btn-action { background: #0056b3; width: 48%; display: inline-block; font-size: 0.8em; }
+        
+        .totals { margin-top: 20px; border-top: 2px dashed #333; padding-top: 10px; }
+        .total-row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 1.2em; }
+        
+        /* Receipt Styles */
+        .receipt-view { width: 300px; background: #fffbe6; }
+        .receipt-header { text-align: center; margin-bottom: 15px; }
+        .receipt-body { min-height: 200px; }
+        .receipt-item { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9em; }
+        .timestamp { text-align: center; margin-top: 10px; font-size: 0.8em; color: #555; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { text-align: left; padding: 5px; border-bottom: 1px solid #eee; }
+
+        /* Hidden file input */
+        #fileInput { display: none; }
+
+        /* PRINT SETTINGS */
+        @media print {
+            body * { visibility: hidden; }
+            .receipt-view, .receipt-view * { visibility: visible; }
+            .receipt-view {
+                position: absolute; left: 0; top: 0; width: 100%;
+                margin: 0; padding: 0; background: white; box-shadow: none; border: none;
+            }
+            .container { display: block; } 
+        }
+    </style>
+</head>
+<div class="watermark"><strong>POS System Made By Luca's Seacoast Market, LLC</strong></div>
+<body>
+
+<div class="container">
+    <div class="panel register">
+        <h2>Register</h2>
+        
+        <div class="input-group">
+            <label>Scan Barcode</label>
+            <input type="number" id="barcodeInput" placeholder="Enter barcode..." onkeydown="if(event.key === &#39;Enter&#39;) addItem()">
+            <button class="btn-add" onclick="addItem()">Add Item</button>
+        </div>
+
+        <h3>Current Cart</h3>
+        <table id="cartTable">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="cartBody"></tbody>
+        </table>
+
+        <div class="totals">
+            <div class="total-row">
+                <span>Total:</span>
+                <span id="displayTotal">$0.00</span>
+            </div>
+            <div class="input-group" style="margin-top:15px;">
+                <label>Cash Given:</label>
+                <input type="number" id="cashInput" placeholder="0.00" oninput="calculateChange()">
+            </div>
+            <div class="total-row">
+                <span>Change:</span>
+                <span id="displayChange">$0.00</span>
+            </div>
+        </div>
+        
+        <button class="btn-print" onclick="finishOrder()">Print Receipt &amp; Auto-Save Sale</button>
+        
+        <button class="btn-clear" onclick="clearCart()">Clear Cart (Cancel)</button>
+
+        <hr style="margin-top: 20px;">
+        <p style="font-size: 0.8em; color: #666; text-align: center;">Manual Backups</p>
+        <div style="display: flex; justify-content: space-between;">
+            <button class="btn-action" onclick="exportSession()">Save Current Cart</button>
+            <button class="btn-action" onclick="document.getElementById(&#39;fileInput&#39;).click()">Import Cart File</button>
+            <input type="file" id="fileInput" accept=".json" onchange="importSession(this)">
+        </div>
+    </div>
+
+    <div class="panel receipt-view">
+        <div class="receipt-header">
+            <strong>Your Business Name</strong><br>Your Business Adress<br>Your Business Phone Number<br>Your Business Website<br>Your Business Email</div>
+        <div style="text-align: center; margin: 10px 0;">--- CASH RECEIPT ---</div>
+        
+        <div id="receiptItems" class="receipt-body"></div>
+
+        <div style="border-top: 1px solid #333; margin-top: 10px; padding-top: 5px;">
+            <div class="receipt-item"><strong>Total</strong> <strong id="receiptTotal">$0.00</strong></div>
+            <div class="receipt-item">Cash <span id="receiptCash">$0.00</span></div>
+            <div class="receipt-item">Change <span id="receiptChange">$0.00</span></div>
+        </div>
+        
+        <div class="timestamp" id="timestamp">3/6/2026, 5:12:26 PM</div>
+    </div>
+</div>
+
+<script>
+    const inventory = {
+        1001: { name: "Your Product", price: 15.99 },
+        1002: { name: "Your Product", price: 15.99 },
+        1003: { name: "Your Product", price: 15.99 },
+        1004: { name: "Your Product", price: 15.99 },
+        1005: { name: "Your Product", price: 15.99 },
+        1006: { name: "Your Product", price: 15.99 },
+        1007: { name: "Your Product", price: 15.99 },
+        1008: { name: "Your Product", price: 15.99 },
+    };
+
+    let cart = [];
+    let total = 0;
+
+    window.onload = function() {
+        const savedCart = localStorage.getItem('pos_cart');
+        if (savedCart) {
+            cart = JSON.parse(savedCart);
+            recalculateTotal();
+        }
+        updateUI();
+    }
+
+    function addItem() {
+        const barcode = document.getElementById('barcodeInput').value;
+        const item = inventory[barcode];
+        if (item) {
+            cart.push({...item, id: Date.now()}); // unique id for items
+            saveToLocal();
+            recalculateTotal();
+            updateUI();
+            document.getElementById('barcodeInput').value = ''; 
+            document.getElementById('barcodeInput').focus();
+        } else {
+            alert("Item not found!");
+        }
+    }
+
+    function recalculateTotal() {
+        total = cart.reduce((sum, item) => sum + item.price, 0);
+    }
+
+    function calculateChange() {
+        const cash = parseFloat(document.getElementById('cashInput').value) || 0;
+        const change = cash - total;
+        document.getElementById('displayChange').innerText = formatMoney(change);
+        document.getElementById('receiptCash').innerText = formatMoney(cash);
+        document.getElementById('receiptChange').innerText = formatMoney(change);
+    }
+
+    function updateUI() {
+        const cartBody = document.getElementById('cartBody');
+        const receiptItems = document.getElementById('receiptItems');
+        cartBody.innerHTML = '';
+        receiptItems.innerHTML = '';
+
+        cart.forEach(item => {
+            cartBody.innerHTML += `<tr><td>${item.name}</td><td>${formatMoney(item.price)}</td></tr>`;
+            receiptItems.innerHTML += `<div class="receipt-item"><span>${item.name}</span><span>${formatMoney(item.price)}</span></div>`;
+        });
+
+        document.getElementById('displayTotal').innerText = formatMoney(total);
+        document.getElementById('receiptTotal').innerText = formatMoney(total);
+        document.getElementById('timestamp').innerText = new Date().toLocaleString();
+        calculateChange();
+    }
+
+    function formatMoney(amount) {
+        return '$' + amount.toFixed(2);
+    }
+
+    function saveToLocal() {
+        localStorage.setItem('luca_pos_cart', JSON.stringify(cart));
+    }
+
+    // NEW LOGIC: Triggers the download file
+    function exportSession(isAuto = false) {
+        if(cart.length === 0) return;
+        
+        const now = new Date();
+        const dateStr = now.toISOString().slice(0,10);
+        const timeStr = now.toTimeString().slice(0,5).replace(':', '-');
+        
+        // Label the file as a completed "Sale" if triggered by print button
+        const prefix = isAuto ? "Sale_Record" : "Manual_Backup";
+        const filename = `${prefix}_${dateStr}_${timeStr}.json`;
+
+        // Create data for the file (includes cart items and total)
+        const saleData = {
+            timestamp: now.toLocaleString(),
+            items: cart,
+            total: total,
+            cashReceived: parseFloat(document.getElementById('cashInput').value) || 0
+        };
+
+        const dataStr = JSON.stringify(saleData, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', filename);
+        linkElement.click();
+    }
+
+    function importSession(inputElement) {
+        const file = inputElement.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const contents = JSON.parse(e.target.result);
+                // Handle both raw cart arrays and the new "saleData" object format
+                cart = Array.isArray(contents) ? contents : contents.items;
+                saveToLocal();
+                recalculateTotal();
+                updateUI();
+                alert("Cart loaded!");
+            } catch (err) {
+                alert("Error reading file.");
+            }
+        };
+        reader.readAsText(file);
+        inputElement.value = ''; 
+    }
+
+    // THE UPDATED FINISH FUNCTION
+    function finishOrder() {
+        if(cart.length === 0) return alert("Cart is empty");
+
+        // 1. Auto-save the record to a file
+        exportSession(true);
+
+        // 2. Open Print Dialog
+        window.print();
+
+        // 3. Reset for next sale
+        clearCart();
+    }
+
+    function clearCart() {
+        cart = [];
+        total = 0;
+        document.getElementById('cashInput').value = '';
+        localStorage.removeItem('luca_pos_cart');
+        updateUI();
+    }
+</script>
+
+
+
+</body></html>
