@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shipping & Payment | Luca's Seacoast Market</title>
+    <style>
+        body { font-family: 'Times', sans-serif; background: #f4f1ea; padding: 40px; color: #001f3f; }
+        .form-container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { border-bottom: 2px solid #0074D9; padding-bottom: 10px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; box-sizing: border-box; border: 1px solid #ccc; border-radius: 5px; }
+        .summary-box { background: #eefbff; padding: 15px; border-radius: 5px; margin: 20px 0; line-height: 1.8; border: 1px solid #d0e7ff; }
+        
+        .submit-btn { 
+            display: block; width: 100%; background: #28a745; color: white; text-align: center; 
+            padding: 20px; text-decoration: none; border: none; border-radius: 8px; font-weight: bold; font-size: 1.3rem;
+            cursor: pointer;
+        }
+        .submit-btn:hover { background: #218838; }
+
+        .remit-box { margin-top: 30px; padding: 20px; background: #fff; border: 2px dashed #001f3f; border-radius: 8px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Shipping Details</h2>
+    <form id="orderForm">
+        <input type="text" id="custName" placeholder="Full Name" required>
+        <input type="email" id="custEmail" placeholder="Your Email Address" required>
+        <input type="text" id="custAddr" placeholder="Street Address" required>
+        <input type="text" id="custCity" placeholder="City, State, Zip" required>
+        
+        <div class="summary-box">
+            Items Subtotal: $<span id="sub">0.00</span><br>
+            Shipping Fee: $15.00<br>
+            <strong>Total Amount Due: $<span id="grand">0.00</span></strong>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Order & Pay via Venmo</button>
+    </form>
+<strong>Note: When you click the green box it will bring you to your email and then back to Venmo.</strong>
+    <div class="remit-box">
+        <strong>Or you can remit payments too:</strong><br>
+        193 Bunker Hill ave<br>
+        Stratham, NH 03885
+    </div>
+</div>
+
+<script>
+    const subtotal = parseFloat(localStorage.getItem('cartSubtotal')) || 0;
+    const shipping = 15.00;
+    const grandTotal = (subtotal + shipping).toFixed(2);
+
+    document.getElementById('sub').innerText = subtotal.toFixed(2);
+    document.getElementById('grand').innerText = grandTotal;
+
+    // --- CONFIGURATION ---
+    const yourEmail = "lucasseacoastmarket@outlook.com"; // Replace with your email
+    const venmoUser = "lucaseacoastmarket";   // Replace with your Venmo handle
+
+    document.getElementById('orderForm').onsubmit = function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('custName').value;
+        const email = document.getElementById('custEmail').value;
+        const addr = document.getElementById('custAddr').value;
+        const city = document.getElementById('custCity').value;
+
+        // Create the Email Content
+        const subject = encodeURIComponent("New Order from " + name);
+        const body = encodeURIComponent(
+            "ORDER DETAILS\n" +
+            "------------------\n" +
+            "Customer: " + name + "\n" +
+            "Email: " + email + "\n" +
+            "Shipping Address: " + addr + ", " + city + "\n\n" +
+            "Total Amount: $" + grandTotal + "\n" +
+            "------------------\n" +
+            "Please check Venmo for payment confirmation."
+        );
+
+        // 1. Open User's Email Client to send you the info
+        window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
+
+        // 2. Wait 2 seconds, then redirect to Venmo
+        setTimeout(function() {
+            const venmoUrl = `https://venmo.com/u/${venmoUser}?amount=${grandTotal}&note=Market%20Order`;
+            window.location.href = venmoUrl;
+        }, 2000);
+    };
+</script>
+
+</body>
+</html>
