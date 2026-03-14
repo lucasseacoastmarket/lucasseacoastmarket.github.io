@@ -47,48 +47,61 @@
 </div>
 
 <script>
+    // 1. Pull the data from the Store page
     const subtotal = parseFloat(localStorage.getItem('cartSubtotal')) || 0;
     const shipping = 15.00;
     const grandTotal = (subtotal + shipping).toFixed(2);
+    
+    // This grabs the list of products (we assume you've updated the store to save them)
+    const savedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
 
     document.getElementById('sub').innerText = subtotal.toFixed(2);
     document.getElementById('grand').innerText = grandTotal;
 
     // --- CONFIGURATION ---
-    const yourEmail = "lucasseacoastmarket@outlook.com"; // Replace with your email
-    const venmoUser = "lucaseacoastmarket";   // Replace with your Venmo handle
+    const yourEmail = "lucasseacoastmarket@outlook.com"; 
+    const venmoUser = "lucaseacoastmarket"; 
 
     document.getElementById('orderForm').onsubmit = function(e) {
         e.preventDefault();
 
         const name = document.getElementById('custName').value;
-        const email = document.getElementById('custEmail').value;
+        const customerEmail = document.getElementById('custEmail').value;
         const addr = document.getElementById('custAddr').value;
         const city = document.getElementById('custCity').value;
 
-        // Create the Email Content
-        const subject = encodeURIComponent("New Order from " + name);
+        // 2. Build the itemized list for the email body
+        let itemListText = "";
+        savedCart.forEach(item => {
+            itemListText += `- ${item.name}: $${item.price.toFixed(2)}\n`;
+        });
+
+        // 3. Create the Email Content
+        const subject = encodeURIComponent("Order Receipt: Luca's Seacoast Market");
         const body = encodeURIComponent(
-            "ORDER DETAILS\n" +
-            "------------------\n" +
-            "Customer: " + name + "\n" +
-            "Email: " + email + "\n" +
-            "Shipping Address: " + addr + ", " + city + "\n\n" +
-            "Total Amount: $" + grandTotal + "\n" +
-            "------------------\n" +
-            "Please check Venmo for payment confirmation."
+            "THANK YOU FOR YOUR ORDER!\n" +
+            "----------------------------\n" +
+            "CUSTOMER INFO:\n" +
+            "Name: " + name + "\n" +
+            "Shipping To: " + addr + ", " + city + "\n\n" +
+            "ITEMS ORDERED:\n" +
+            itemListText + 
+            "\n" +
+            "Subtotal: $" + subtotal.toFixed(2) + "\n" +
+            "Shipping Fee: $15.00\n" +
+            "GRAND TOTAL: $" + grandTotal + "\n" +
+            "----------------------------\n" +
+            "Your order info has been sent to us. Please complete the Venmo payment now."
         );
 
-        // 1. Open User's Email Client to send you the info
-        window.location.href = `mailto:${yourEmail}?subject=${subject}&body=${body}`;
+        // 4. Open Email App (Sends to YOU and CC's the CUSTOMER)
+        window.location.href = `mailto:${yourEmail}?cc=${customerEmail}&subject=${subject}&body=${body}`;
 
-        // 2. Wait 2 seconds, then redirect to Venmo
+        // 5. Redirect to Venmo after 3 seconds
         setTimeout(function() {
-            const venmoUrl = `https://venmo.com/u/${venmoUser}?amount=${grandTotal}&note=Market%20Order`;
+            const venmoUrl = `https://venmo.com/u/${venmoUser}?amount=${grandTotal}&note=Order%20for%20${encodeURIComponent(name)}`;
             window.location.href = venmoUrl;
-        }, 2000);
+        }, 3000);
     };
 </script>
-
-</body>
 </html>
