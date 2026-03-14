@@ -123,6 +123,29 @@
                     <button class="btn-remove" onclick="removeItem(${index})">Remove</button>
                 </div>`;
         });
+        function renderCart() {
+    const list = document.getElementById('cart-list');
+    const subtotalEl = document.getElementById('subtotal');
+    list.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        total += item.price;
+        list.innerHTML += `
+            <div class="cart-item">
+                <span>${item.name} - $${item.price.toFixed(2)}</span>
+                <button class="btn-remove" onclick="removeItem(${index})">Remove</button>
+            </div>`;
+    });
+
+    if (cart.length === 0) list.innerHTML = 'Your cart is empty.';
+    subtotalEl.innerText = total.toFixed(2);
+    
+    // ADD THIS LINE BELOW:
+    localStorage.setItem('cartItems', JSON.stringify(cart));
+    
+    localStorage.setItem('cartSubtotal', total.toFixed(2));
+}
 
         if (cart.length === 0) list.innerHTML = 'Your cart is empty.';
         subtotalEl.innerText = total.toFixed(2);
