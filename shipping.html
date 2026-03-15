@@ -93,9 +93,9 @@
             "A copy of this receipt has been sent to your email. Please complete the Venmo payment now."
         );
 
-        // 4. Open Email App (Sends to YOU and CC's the CUSTOMER)
-        window.location.href = `mailto:${yourEmail}?cc=${email}&subject=${subject}&body=${body}`;
-
+        // 4. Open Email App (Sends to BOTH your emails and CC's the CUSTOMER)
+        const businessEmails = "lucasseacoastmarket@outlook.com,lucasseacoastmarket@gmail.com";
+        window.location.href = `mailto:${businessEmails}?cc=${email}&subject=${subject}&body=${body}`;
         // 5. Redirect to Venmo after 3 seconds
         setTimeout(function() {
             const venmoUrl = `https://venmo.com/u/${venmoUser}?amount=${grandTotal}&note=Order%20for%20${encodeURIComponent(name)}`;
