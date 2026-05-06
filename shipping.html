@@ -98,8 +98,17 @@
         window.location.href = `mailto:${businessEmails}?cc=${email}&subject=${subject}&body=${body}`;
         // 5. Redirect to Venmo after 3 seconds
         setTimeout(function() {
-            const venmoUrl = `https://venmo.com/u/${venmoUser}?amount=${grandTotal}&note=Order%20for%20${encodeURIComponent(name)}`;
+            // This deep link works for the mobile app to pre-fill the amount and note
+            const venmoUrl = `venmo://paycharge?txn=pay&recipients=${venmoUser}&amount=${grandTotal}&notes=Order%20for%20${encodeURIComponent(name)}`;
+            
+            // Fallback for desktop users who don't have the app
+            const webFallback = `https://venmo.com/${venmoUser}`;
+            
             window.location.href = venmoUrl;
+
+            // If the app doesn't open in 1 second, go to the web profile
+            setTimeout(function() {
+                if (!document.hasFocus()) return; 
+                window.location.href = webFallback;
+            }, 1000);
         }, 3000);
-    };
-</script>
