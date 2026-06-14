@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Store | Luca's Seacoast Market</title>
+    <link rel="icon" type="image/x-icon" href="icon.ico">
+    <style>
+        :root { --navy: #001f3f; --ocean: #0074D9; --sand: #f4f1ea; }
+        body { font-family: 'Times', sans-serif; background: var(--sand); color: var(--navy); margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; }
+
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px; 
+        }
+
+        .card img {
+            width: 100%;
+            aspect-ratio: 4 / 5; 
+            object-fit: cover;   
+            border-radius: 5px;
+            background: #eee;
+            display: block;
+        }
+
+        .cart-section { margin-top: 40px; background: white; padding: 20px; border-radius: 10px; border-top: 5px solid var(--ocean); }
+        .cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        
+        button { cursor: pointer; padding: 10px; border: none; border-radius: 5px; transition: 0.2s; }
+        .btn-add { background: var(--ocean); color: white; width: 100%; margin-top: 10px; }
+        .btn-remove { background: #ff4136; color: white; padding: 5px 10px; font-size: 0.8rem; }
+        .btn-checkout { background: #28a745; color: white; font-size: 1.2rem; padding: 15px 30px; float: right; margin-top: 20px; text-decoration: none; display: inline-block; }
+    </style>
+</head>
+<body>
+    <img src="logo.png" alt="Logo" style="position:fixed; top:1px; left:1px; width:200px; z-index:1000;">
+<div class="container">
+    <h1>Luca's Seacoast Market</h1>
+    <div class="product-grid">
+        
+        <div class="card">
+            <img src="maplesyrup1.jpeg" alt="Maple Syrup">
+            <h3>Maple Syrup 8 oz</h3>
+            <p>$13.99</p>
+            <button class="btn-add" onclick="addToCart('Maple Syrup 8 oz', 13.99)">Add to Cart</button>
+        </div>
+        
+        <div class="card">
+            <img src="maplesyrup.jpeg" alt="Maple Syrup Tester">
+            <h3>Maple Syrup Tester</h3>
+            <p>$5.00</p>
+            <button class="btn-add" onclick="addToCart('Maple Syrup Tester', 5.00)">Add to Cart</button>
+        </div>
+
+        <div class="card">
+            <img src="pillar.jpeg" alt="Pillar Candle">
+            <h3>Candle, Pillar</h3>
+            <p>$7.00</p>
+            <button class="btn-add" onclick="addToCart('Candle, Pillar', 7.00)">Add to Cart</button>
+        </div>
+
+        <div class="card">
+            <img src="novelty.jpeg" alt="Novelty Candle">
+            <h3>Candle, Novelty</h3>
+            <p>$8.00</p>
+            <button class="btn-add" onclick="addToCart('Candle, Novelty', 8.00)">Add to Cart</button>
+        </div>
+
+        <div class="card">
+            <img src="votive.jpeg" alt="Votive Candle">
+            <h3>Candle, Votive</h3>
+            <p>$6.00</p>
+            <button class="btn-add" onclick="addToCart('Candle, Votive', 6.00)">Add to Cart</button>
+        </div>
+
+        <div class="card">
+            <img src="vinegar.jpeg" alt="Spruce Tree Vinegar">
+            <h3>Balsam Fir Vinegar All-Purpose Cleaner</h3>
+            <p>$7.00</p>
+            <button class="btn-add" onclick="addToCart('Balsam Fir Vinegar All-Purpose Cleaner', 7.00)">Add to Cart</button>
+        </div>
+
+    </div>
+
+    <div class="cart-section">
+        <h2>Your Shopping Cart</h2>
+        <div id="cart-list">Your cart is empty.</div>
+        <h3 style="text-align: right;">Subtotal: $<span id="subtotal">0.00</span></h3>
+        <button class="btn-checkout" onclick="goToShipping()">Proceed to Shipping &rarr;</button>
+    </div>
+</div>
+
+<script>
+    let cart = [];
+
+    function addToCart(name, price) {
+        cart.push({ name, price });
+        renderCart();
+    }
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+        renderCart();
+    }
+
+    function renderCart() {
+        const list = document.getElementById('cart-list');
+        const subtotalEl = document.getElementById('subtotal');
+        list.innerHTML = '';
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            total += item.price;
+            list.innerHTML += `
+                <div class="cart-item">
+                    <span>${item.name} - $${item.price.toFixed(2)}</span>
+                    <button class="btn-remove" onclick="removeItem(${index})">Remove</button>
+                </div>`;
+        });
+
+        if (cart.length === 0) {
+            list.innerHTML = 'Your cart is empty.';
+        }
+
+        subtotalEl.innerText = total.toFixed(2);
+
+        // This is the "Local Storage" line that makes the receipt work:
+        localStorage.setItem('cartItems', JSON.stringify(cart));
+        localStorage.setItem('cartSubtotal', total.toFixed(2));
+    }
+
+    function goToShipping() {
+        if (parseFloat(localStorage.getItem('cartSubtotal')) <= 0) {
+            return alert("Add items first!");
+        }
+        window.location.href = 'https://lucasseacoastmarket.com/shipping';
+    }
+</script>
+</body>
+</html>
