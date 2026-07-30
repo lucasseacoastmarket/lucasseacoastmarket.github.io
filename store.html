@@ -12,13 +12,13 @@
   <style>
     /* --- COLOR PALETTE & VARIABLES --- */
     :root {
-      --bg-color: #fcf8f2;          /* Warm organic cream */
-      --card-bg: #ffffff;         
-      --primary-color: #2c4c3b;     /* Deep forest green */
-      --accent-color: #c8812d;      /* Warm maple gold */
-      --text-dark: #222c26;
-      --text-muted: #626d66;
-      --border-color: #e5dec9;
+      --primary-green: #2d4a22;     /* Earthy Forest Green */
+      --secondary-brown: #4a2e1b;   /* Deep Warm Brown */
+      --accent-orange: #d96b27;    /* Vibrant Autumn Orange */
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --text-dark: #231912;
+      --text-muted: #57463a;
+      --border-color: #d1bba7;
       --transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
@@ -30,7 +30,9 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-color);
+      /* Background Image sback.jpg with fixed cover styling */
+      background: url('sback.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: var(--text-dark);
       line-height: 1.6;
       overflow-x: hidden;
@@ -46,9 +48,9 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(252, 248, 242, 0.95);
+      background: rgba(74, 46, 27, 0.95); /* Deep Brown Header */
       backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 2px solid var(--accent-orange);
       padding: 1.2rem 2rem;
       display: flex;
       justify-content: space-between;
@@ -59,7 +61,7 @@
     .brand-logo {
       font-size: 1.5rem;
       font-weight: 700;
-      color: var(--primary-color);
+      color: #ffffff;
       text-decoration: none;
       text-transform: uppercase;
     }
@@ -67,7 +69,7 @@
     nav a {
       margin-left: 2rem;
       text-decoration: none;
-      color: var(--text-dark);
+      color: #fceee6;
       font-weight: 600;
       font-size: 0.9rem;
       position: relative;
@@ -81,12 +83,12 @@
       height: 2px;
       bottom: -4px;
       left: 0;
-      background-color: var(--accent-color);
+      background-color: var(--accent-orange);
       transition: width var(--transition);
     }
 
     nav a:hover {
-      color: var(--accent-color);
+      color: var(--accent-orange);
     }
 
     nav a:hover::after {
@@ -100,15 +102,25 @@
       animation: fadeIn 1s ease-out;
     }
 
+    .hero-box {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.88);
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(5px);
+    }
+
     .hero h1 {
       font-size: 3rem;
-      color: var(--primary-color);
+      color: var(--primary-green);
       margin-bottom: 0.5rem;
     }
 
     .hero p {
-      color: var(--text-muted);
+      color: var(--secondary-brown);
       font-size: 1.1rem;
+      font-weight: 500;
       max-width: 600px;
       margin: 0 auto;
     }
@@ -116,8 +128,8 @@
     .divider {
       width: 80px;
       height: 3px;
-      background-color: var(--accent-color);
-      margin: 1.5rem auto;
+      background-color: var(--accent-orange);
+      margin: 1rem auto;
       border-radius: 2px;
     }
 
@@ -125,7 +137,7 @@
     .store-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem 1.5rem 5rem;
+      padding: 2rem 1.5rem 3rem;
     }
 
     .product-grid {
@@ -136,12 +148,12 @@
 
     .product-card {
       background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
+      border: 2px solid var(--border-color);
       border-radius: 12px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
       transition: var(--transition);
       opacity: 0;
       animation: fadeInUp 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
@@ -153,20 +165,18 @@
     .product-card:nth-child(3) { animation-delay: 0.3s; }
     .product-card:nth-child(4) { animation-delay: 0.4s; }
     .product-card:nth-child(5) { animation-delay: 0.5s; }
-    .product-card:nth-child(6) { animation-delay: 0.6s; }
-    .product-card:nth-child(7) { animation-delay: 0.7s; }
 
     .product-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 15px 30px rgba(44, 76, 59, 0.12);
-      border-color: var(--accent-color);
+      box-shadow: 0 15px 30px rgba(74, 46, 27, 0.25);
+      border-color: var(--accent-orange);
     }
 
     .image-container {
       width: 100%;
       height: 230px;
       overflow: hidden;
-      background-color: #f3efe6;
+      background-color: #efe6dc;
       position: relative;
     }
 
@@ -190,14 +200,14 @@
 
     .product-title {
       font-size: 1.25rem;
-      color: var(--primary-color);
+      color: var(--primary-green);
       margin-bottom: 0.25rem;
     }
 
     .product-price {
       font-size: 1.15rem;
       font-weight: 700;
-      color: var(--accent-color);
+      color: var(--accent-orange);
       margin-bottom: 1rem;
     }
 
@@ -207,7 +217,7 @@
       align-items: center;
       justify-content: space-between;
       margin-top: auto;
-      background: var(--bg-color);
+      background: #fdfaf6;
       padding: 0.4rem;
       border-radius: 8px;
       border: 1px solid var(--border-color);
@@ -216,12 +226,12 @@
     .qty-btn {
       width: 32px;
       height: 32px;
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
+      background-color: var(--secondary-brown);
+      border: none;
       border-radius: 6px;
       font-size: 1.1rem;
       font-weight: bold;
-      color: var(--primary-color);
+      color: #ffffff;
       cursor: pointer;
       transition: var(--transition);
       display: flex;
@@ -230,8 +240,7 @@
     }
 
     .qty-btn:hover {
-      background-color: var(--primary-color);
-      color: #ffffff;
+      background-color: var(--accent-orange);
     }
 
     .qty-input {
@@ -240,13 +249,37 @@
       border: none;
       background: transparent;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-dark);
     }
 
-    /* --- ORDER SUMMARY & FORMSPREE SECTION --- */
+    /* IN-PERSON NOTICE */
+    .in-person-notice {
+      max-width: 800px;
+      margin: 0 auto 3rem auto;
+      background: rgba(255, 255, 255, 0.92);
+      border: 2px dashed var(--accent-orange);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .in-person-notice h3 {
+      color: var(--secondary-brown);
+      font-size: 1.3rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .in-person-notice p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    /* --- CHECKOUT & FORMSPREE SECTION --- */
     .checkout-section {
-      background-color: var(--primary-color);
+      background-color: rgba(45, 74, 34, 0.95); /* Deep Green Background */
       color: #ffffff;
       padding: 5rem 1.5rem;
       position: relative;
@@ -255,12 +288,12 @@
     .checkout-container {
       max-width: 700px;
       margin: 0 auto;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(74, 46, 27, 0.85); /* Warm Brown Card */
+      border: 2px solid var(--accent-orange);
       backdrop-filter: blur(8px);
       padding: 2.5rem;
       border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
     }
 
     .checkout-container h2 {
@@ -272,24 +305,24 @@
 
     .checkout-container p {
       text-align: center;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.85);
       margin-bottom: 2rem;
     }
 
     /* Cart Summary List */
     .cart-summary {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.25);
       border-radius: 8px;
       padding: 1.2rem;
       margin-bottom: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     .summary-item {
       display: flex;
       justify-content: space-between;
       padding: 0.4rem 0;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
       font-size: 0.95rem;
     }
 
@@ -304,8 +337,8 @@
       font-size: 1.25rem;
       margin-top: 1rem;
       padding-top: 1rem;
-      border-top: 2px solid var(--accent-color);
-      color: var(--accent-color);
+      border-top: 2px solid var(--accent-orange);
+      color: var(--accent-orange);
     }
 
     .form-group {
@@ -318,15 +351,16 @@
       font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: var(--accent-color);
+      color: var(--accent-orange);
+      font-weight: 600;
     }
 
     .form-group input,
     .form-group textarea {
       width: 100%;
       padding: 0.9rem;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background-color: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background-color: rgba(255, 255, 255, 0.1);
       color: #ffffff;
       font-family: inherit;
       border-radius: 8px;
@@ -336,14 +370,14 @@
     .form-group input:focus,
     .form-group textarea:focus {
       outline: none;
-      border-color: var(--accent-color);
-      background-color: rgba(255, 255, 255, 0.15);
+      border-color: var(--accent-orange);
+      background-color: rgba(255, 255, 255, 0.2);
     }
 
     .submit-btn {
       width: 100%;
       padding: 1.1rem;
-      background-color: var(--accent-color);
+      background-color: var(--accent-orange);
       color: #ffffff;
       border: none;
       border-radius: 8px;
@@ -357,17 +391,19 @@
     }
 
     .submit-btn:hover {
-      background-color: #d88e36;
+      background-color: #be5615;
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(200, 129, 45, 0.3);
+      box-shadow: 0 10px 20px rgba(217, 107, 39, 0.4);
     }
 
     /* --- FOOTER --- */
     footer {
       text-align: center;
       padding: 2rem;
-      color: var(--text-muted);
+      background-color: var(--secondary-brown);
+      color: #fceee6;
       font-size: 0.9rem;
+      border-top: 1px solid var(--accent-orange);
     }
 
     /* --- KEYFRAME ANIMATIONS --- */
@@ -405,9 +441,11 @@
   </header>
 
   <section class="hero">
-    <h1>Our Market Store</h1>
-    <div class="divider"></div>
-    <p>Select quantities for your favorite handcrafted candles, pure spring maple syrup, and home goods.</p>
+    <div class="hero-box">
+      <h1>Our Market Store</h1>
+      <div class="divider"></div>
+      <p>Select quantities for your favorite handcrafted candles, pure spring maple syrup, and home goods.</p>
+    </div>
   </section>
 
   <main class="store-container">
@@ -473,36 +511,6 @@
         </div>
       </div>
 
-      <div class="product-card" data-name="Coffee" data-price="2.00">
-        <div class="image-container">
-          <img src="coffee.jpg" alt="Coffee" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Coffee';">
-        </div>
-        <div class="product-details">
-          <h3 class="product-title">Fresh Coffee</h3>
-          <div class="product-price">$2.00</div>
-          <div class="qty-picker">
-            <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
-            <input type="number" class="qty-input" value="0" min="0" readonly>
-            <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="product-card" data-name="Apple Cider" data-price="2.00">
-        <div class="image-container">
-          <img src="cider.jpg" alt="Apple Cider" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Apple+Cider';">
-        </div>
-        <div class="product-details">
-          <h3 class="product-title">Apple Cider</h3>
-          <div class="product-price">$2.00</div>
-          <div class="qty-picker">
-            <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
-            <input type="number" class="qty-input" value="0" min="0" readonly>
-            <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
-          </div>
-        </div>
-      </div>
-
       <div class="product-card" data-name="Balsam Fir Vinegar All-Purpose Cleaner" data-price="7.00">
         <div class="image-container">
           <img src="cleaner.jpg" alt="Balsam Fir Vinegar Cleaner" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=All-Purpose+Cleaner';">
@@ -521,13 +529,18 @@
     </div>
   </main>
 
+  <div class="in-person-notice">
+    <h3>Looking for Fresh Coffee or Apple Cider?</h3>
+    <p>Please note that hot coffee and fresh apple cider ($2.00 each) are non-shippable items available exclusively for in-person orders at our market location!</p>
+  </div>
+
   <section class="checkout-section" id="checkout">
     <div class="checkout-container">
       <h2>Complete Your Order</h2>
-      <p>Review your selected items below and submit your order details.</p>
+      <p>Review your selected items below and enter your shipping details.</p>
 
       <div class="cart-summary" id="cartSummary">
-        <p style="text-align: center; color: rgba(255,255,255,0.6);" id="emptyCartMsg">No items selected yet. Adjust quantities above.</p>
+        <p style="text-align: center; color: rgba(255,255,255,0.7);" id="emptyCartMsg">No items selected yet. Adjust quantities above.</p>
         <div id="summaryItems"></div>
         <div class="cart-total">
           <span>Total Estimated:</span>
@@ -556,8 +569,18 @@
         </div>
 
         <div class="form-group">
-          <label for="notes">Special Instructions or Delivery Notes</label>
-          <textarea id="notes" name="Notes" rows="3" placeholder="Add shipping details or custom request notes..."></textarea>
+          <label for="street-address">Street Address</label>
+          <input type="text" id="street-address" name="Street_Address" placeholder="123 Main St, Apt 4B" required>
+        </div>
+
+        <div class="form-group">
+          <label for="city-state-zip">City, State, & ZIP Code</label>
+          <input type="text" id="city-state-zip" name="City_State_ZIP" placeholder="Hampton, NH 03842" required>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Special Delivery Notes / Instructions</label>
+          <textarea id="notes" name="Notes" rows="3" placeholder="Add custom request notes or drop-off instructions..."></textarea>
         </div>
 
         <button type="submit" class="submit-btn">Submit Order Request</button>
