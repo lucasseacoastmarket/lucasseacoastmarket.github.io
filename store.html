@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lucas Seacoast Market | Store</title>
+  <title>Store | Luca's Seacoast Market</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- CSS RESET & VARIABLES --- */
+    /* --- COLOR PALETTE & VARIABLES --- */
     :root {
-      --primary-color: #0d2538;
-      --accent-color: #c5a059;
-      --bg-color: #fdfbf7;
-      --card-bg: #ffffff;
-      --text-color: #2b2b2b;
-      --light-text: #666666;
-      --transition-speed: 0.4s;
+      --bg-color: #fcf8f2;          /* Warm organic cream */
+      --card-bg: #ffffff;         
+      --primary-color: #2c4c3b;     /* Deep forest green */
+      --accent-color: #c8812d;      /* Warm maple gold */
+      --text-dark: #222c26;
+      --text-muted: #626d66;
+      --border-color: #e5dec9;
+      --transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     * {
@@ -28,64 +29,60 @@
     }
 
     body {
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--bg-color);
-      color: var(--text-color);
+      color: var(--text-dark);
       line-height: 1.6;
       overflow-x: hidden;
     }
 
-    h1, h2, h3 {
-      font-family: 'Cormorant Garamond', serif;
-      letter-spacing: 1px;
+    h1, h2, h3, .brand-logo {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.5px;
     }
 
-    /* --- HEADER & NAVIGATION --- */
+    /* --- NAVBAR --- */
     header {
-      background-color: rgba(253, 251, 247, 0.95);
-      backdrop-filter: blur(10px);
       position: sticky;
       top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+      z-index: 100;
+      background: rgba(252, 248, 242, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
       padding: 1.2rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      animation: fadeInDown 0.8s ease-out;
+      animation: slideDown 0.8s ease-out;
     }
 
-    .logo {
-      font-size: 1.8rem;
+    .brand-logo {
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--primary-color);
       text-decoration: none;
-      font-family: 'Cormorant Garamond', serif;
       text-transform: uppercase;
-      letter-spacing: 2px;
     }
 
     nav a {
       margin-left: 2rem;
       text-decoration: none;
-      color: var(--text-color);
-      font-weight: 500;
+      color: var(--text-dark);
+      font-weight: 600;
       font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
       position: relative;
-      transition: color var(--transition-speed);
+      transition: color var(--transition);
     }
 
     nav a::after {
       content: '';
       position: absolute;
-      width: 0%;
+      width: 0;
       height: 2px;
       bottom: -4px;
       left: 0;
       background-color: var(--accent-color);
-      transition: width var(--transition-speed) ease;
+      transition: width var(--transition);
     }
 
     nav a:hover {
@@ -96,74 +93,81 @@
       width: 100%;
     }
 
-    /* --- HERO SECTION --- */
+    /* --- HERO --- */
     .hero {
       text-align: center;
-      padding: 5rem 1rem 3rem 1rem;
-      animation: fadeIn 1.2s ease-out;
+      padding: 4rem 1rem 2rem;
+      animation: fadeIn 1s ease-out;
     }
 
     .hero h1 {
-      font-size: 3.5rem;
+      font-size: 3rem;
       color: var(--primary-color);
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     .hero p {
+      color: var(--text-muted);
       font-size: 1.1rem;
-      color: var(--light-text);
       max-width: 600px;
       margin: 0 auto;
     }
 
     .divider {
-      width: 60px;
-      height: 2px;
+      width: 80px;
+      height: 3px;
       background-color: var(--accent-color);
       margin: 1.5rem auto;
+      border-radius: 2px;
     }
 
-    /* --- STORE GRID SECTION --- */
+    /* --- PRODUCT GRID --- */
     .store-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 2rem 1.5rem 5rem;
     }
 
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
     }
 
     .product-card {
       background-color: var(--card-bg);
-      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-      border: 1px solid rgba(0,0,0,0.05);
-      transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+      transition: var(--transition);
       opacity: 0;
-      animation: fadeInUp 0.8s ease-out forwards;
+      animation: fadeInUp 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
     }
 
-    /* Staggered animation delays for cards */
-    .product-card:nth-child(1) { animation-delay: 0.2s; }
-    .product-card:nth-child(2) { animation-delay: 0.4s; }
-    .product-card:nth-child(3) { animation-delay: 0.6s; }
-    .product-card:nth-child(4) { animation-delay: 0.8s; }
+    /* Staggered Animations */
+    .product-card:nth-child(1) { animation-delay: 0.1s; }
+    .product-card:nth-child(2) { animation-delay: 0.2s; }
+    .product-card:nth-child(3) { animation-delay: 0.3s; }
+    .product-card:nth-child(4) { animation-delay: 0.4s; }
+    .product-card:nth-child(5) { animation-delay: 0.5s; }
+    .product-card:nth-child(6) { animation-delay: 0.6s; }
+    .product-card:nth-child(7) { animation-delay: 0.7s; }
 
     .product-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      box-shadow: 0 15px 30px rgba(44, 76, 59, 0.12);
+      border-color: var(--accent-color);
     }
 
-    .image-wrapper {
-      position: relative;
+    .image-container {
       width: 100%;
-      height: 280px;
+      height: 230px;
       overflow: hidden;
-      background-color: #f0f0f0;
+      background-color: #f3efe6;
+      position: relative;
     }
 
     .product-card img {
@@ -174,81 +178,143 @@
     }
 
     .product-card:hover img {
-      transform: scale(1.06);
+      transform: scale(1.08);
     }
 
-    .product-info {
+    .product-details {
       padding: 1.5rem;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
 
     .product-title {
-      font-size: 1.4rem;
+      font-size: 1.25rem;
       color: var(--primary-color);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
 
     .product-price {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
+      font-weight: 700;
       color: var(--accent-color);
-      font-weight: 600;
       margin-bottom: 1rem;
     }
 
-    .order-btn {
-      display: inline-block;
-      padding: 0.6rem 1.5rem;
-      border: 1px solid var(--accent-color);
-      color: var(--primary-color);
-      background: transparent;
-      text-decoration: none;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 600;
-      transition: all var(--transition-speed) ease;
-      cursor: pointer;
+    /* QUANTITY CONTROLS */
+    .qty-picker {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      background: var(--bg-color);
+      padding: 0.4rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
     }
 
-    .order-btn:hover {
-      background-color: var(--accent-color);
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-btn:hover {
+      background-color: var(--primary-color);
       color: #ffffff;
     }
 
-    /* --- INQUIRY / FORMSPREE SECTION --- */
-    .inquiry-section {
+    .qty-input {
+      width: 45px;
+      text-align: center;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    /* --- ORDER SUMMARY & FORMSPREE SECTION --- */
+    .checkout-section {
       background-color: var(--primary-color);
       color: #ffffff;
       padding: 5rem 1.5rem;
-      margin-top: 5rem;
-      animation: fadeIn 1s ease-out;
+      position: relative;
     }
 
-    .inquiry-container {
-      max-width: 650px;
+    .checkout-container {
+      max-width: 700px;
       margin: 0 auto;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
 
-    .inquiry-section h2 {
-      font-size: 2.8rem;
+    .checkout-container h2 {
       text-align: center;
-      color: #ffffff;
+      font-size: 2.2rem;
       margin-bottom: 0.5rem;
+      color: #ffffff;
     }
 
-    .inquiry-section p {
+    .checkout-container p {
       text-align: center;
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.8);
       margin-bottom: 2rem;
     }
 
-    .form-group {
+    /* Cart Summary List */
+    .cart-summary {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 1.2rem;
       margin-bottom: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+      font-size: 0.95rem;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 2px solid var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
     }
 
     .form-group label {
       display: block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -256,77 +322,69 @@
     }
 
     .form-group input,
-    .form-group textarea,
-    .form-group select {
+    .form-group textarea {
       width: 100%;
       padding: 0.9rem;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: rgba(255, 255, 255, 0.08);
       color: #ffffff;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.95rem;
-      border-radius: 2px;
-      transition: border-color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+      font-family: inherit;
+      border-radius: 8px;
+      transition: var(--transition);
     }
 
     .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
+    .form-group textarea:focus {
       outline: none;
       border-color: var(--accent-color);
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(255, 255, 255, 0.15);
     }
 
     .submit-btn {
       width: 100%;
-      padding: 1rem;
+      padding: 1.1rem;
       background-color: var(--accent-color);
       color: #ffffff;
       border: none;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.9rem;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-weight: 600;
+      letter-spacing: 1px;
       cursor: pointer;
-      transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
+      transition: var(--transition);
     }
 
     .submit-btn:hover {
-      background-color: #b08d49;
+      background-color: #d88e36;
       transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(200, 129, 45, 0.3);
     }
 
     /* --- FOOTER --- */
     footer {
       text-align: center;
       padding: 2rem;
-      font-size: 0.85rem;
-      color: var(--light-text);
-      border-top: 1px solid rgba(0,0,0,0.05);
+      color: var(--text-muted);
+      font-size: 0.9rem;
     }
 
-    /* --- ANIMATION KEYFRAMES --- */
+    /* --- KEYFRAME ANIMATIONS --- */
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
 
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
     }
 
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
       }
       to {
         opacity: 1;
@@ -338,111 +396,244 @@
 <body>
 
   <header>
-    <a href="index.html" class="logo">Lucas Seacoast Market</a>
+    <a href="index.html" class="brand-logo">Luca's Seacoast Market</a>
     <nav>
       <a href="index.html">Home</a>
       <a href="store.html">Store</a>
-      <a href="#contact">Contact</a>
+      <a href="#checkout">Checkout</a>
     </nav>
   </header>
 
   <section class="hero">
-    <h1>Our Curated Market</h1>
+    <h1>Our Market Store</h1>
     <div class="divider"></div>
-    <p>Handcrafted selections and fresh, premium offerings from the Seacoast directly to your table.</p>
+    <p>Select quantities for your favorite handcrafted candles, pure spring maple syrup, and home goods.</p>
   </section>
 
   <main class="store-container">
     <div class="product-grid">
 
-      <div class="product-card">
-        <div class="image-wrapper">
-          <img src="images/item1.jpg" alt="Fresh Seacoast Catch" onerror="this.src='https://via.placeholder.com/400x300?text=Product+Image'">
+      <div class="product-card" data-name="Maple Syrup 8 oz" data-price="13.99">
+        <div class="image-container">
+          <img src="maple-syrup.jpg" alt="Maple Syrup 8 oz" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Maple+Syrup';">
         </div>
-        <div class="product-info">
-          <h3 class="product-title">Fresh Catch Selection</h3>
-          <div class="product-price">$24.99</div>
-          <a href="#contact" class="order-btn">Inquire / Order</a>
-        </div>
-      </div>
-
-      <div class="product-card">
-        <div class="image-wrapper">
-          <img src="images/item2.jpg" alt="Artisanal Market Basket" onerror="this.src='https://via.placeholder.com/400x300?text=Product+Image'">
-        </div>
-        <div class="product-info">
-          <h3 class="product-title">Artisanal Market Basket</h3>
-          <div class="product-price">$45.00</div>
-          <a href="#contact" class="order-btn">Inquire / Order</a>
+        <div class="product-details">
+          <h3 class="product-title">Maple Syrup (8 oz)</h3>
+          <div class="product-price">$13.99</div>
+          <div class="qty-picker">
+            <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+            <input type="number" class="qty-input" value="0" min="0" readonly>
+            <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+          </div>
         </div>
       </div>
 
-      <div class="product-card">
-        <div class="image-wrapper">
-          <img src="images/item3.jpg" alt="Local Reserve Goods" onerror="this.src='https://via.placeholder.com/400x300?text=Product+Image'">
+      <div class="product-card" data-name="Pillar Candle" data-price="7.00">
+        <div class="image-container">
+          <img src="candle-pillar.jpg" alt="Pillar Candle" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Pillar+Candle';">
         </div>
-        <div class="product-info">
-          <h3 class="product-title">Local Reserve Goods</h3>
-          <div class="product-price">$18.50</div>
-          <a href="#contact" class="order-btn">Inquire / Order</a>
+        <div class="product-details">
+          <h3 class="product-title">Candle, Pillar</h3>
+          <div class="product-price">$7.00</div>
+          <div class="qty-picker">
+            <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+            <input type="number" class="qty-input" value="0" min="0" readonly>
+            <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+          </div>
         </div>
       </div>
 
-      <div class="product-card">
-        <div class="image-wrapper">
-          <img src="images/item4.jpg" alt="Seacoast Specialty Gift Box" onerror="this.src='https://via.placeholder.com/400x300?text=Product+Image'">
+      <div class="product-card" data-name="Novelty Candle" data-price="8.00">
+        <div class="image-container">
+          <img src="candle-novelty.jpg" alt="Novelty Candle" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Novelty+Candle';">
         </div>
-        <div class="product-info">
-          <h3 class="product-title">Specialty Gift Box</h3>
-          <div class="product-price">$60.00</div>
-          <a href="#contact" class="order-btn">Inquire / Order</a>
+        <div class="product-details">
+          <h3 class="product-title">Candle, Novelty</h3>
+          <div class="product-price">$8.00</div>
+          <div class="qty-picker">
+            <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+            <input type="number" class="qty-input" value="0" min="0" readonly>
+            <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-name="Votive Candle" data-price="6.00">
+        <div class="image-container">
+          <img src="candle-votive.jpg" alt="Votive Candle" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Votive+Candle';">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Candle, Votive</h3>
+          <div class="product-price">$6.00</div>
+          <div class="qty-picker">
+            <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+            <input type="number" class="qty-input" value="0" min="0" readonly>
+            <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-name="Coffee" data-price="2.00">
+        <div class="image-container">
+          <img src="coffee.jpg" alt="Coffee" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Coffee';">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Fresh Coffee</h3>
+          <div class="product-price">$2.00</div>
+          <div class="qty-picker">
+            <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+            <input type="number" class="qty-input" value="0" min="0" readonly>
+            <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-name="Apple Cider" data-price="2.00">
+        <div class="image-container">
+          <img src="cider.jpg" alt="Apple Cider" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Apple+Cider';">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Apple Cider</h3>
+          <div class="product-price">$2.00</div>
+          <div class="qty-picker">
+            <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+            <input type="number" class="qty-input" value="0" min="0" readonly>
+            <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card" data-name="Balsam Fir Vinegar All-Purpose Cleaner" data-price="7.00">
+        <div class="image-container">
+          <img src="cleaner.jpg" alt="Balsam Fir Vinegar Cleaner" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=All-Purpose+Cleaner';">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Balsam Fir Vinegar Cleaner</h3>
+          <div class="product-price">$7.00</div>
+          <div class="qty-picker">
+            <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+            <input type="number" class="qty-input" value="0" min="0" readonly>
+            <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+          </div>
         </div>
       </div>
 
     </div>
   </main>
 
-  <section class="inquiry-section" id="contact">
-    <div class="inquiry-container">
-      <h2>Place an Order or Inquiry</h2>
-      <p>Fill out the details below to request items or ask questions directly.</p>
-      
-      <form action="https://formspree.io/f/meeywaww" method="POST">
+  <section class="checkout-section" id="checkout">
+    <div class="checkout-container">
+      <h2>Complete Your Order</h2>
+      <p>Review your selected items below and submit your order details.</p>
+
+      <div class="cart-summary" id="cartSummary">
+        <p style="text-align: center; color: rgba(255,255,255,0.6);" id="emptyCartMsg">No items selected yet. Adjust quantities above.</p>
+        <div id="summaryItems"></div>
+        <div class="cart-total">
+          <span>Total Estimated:</span>
+          <span id="grandTotal">$0.00</span>
+        </div>
+      </div>
+
+      <form action="https://formspree.io/f/meeywaww" method="POST" onsubmit="prepareFormSubmission(event)">
         
+        <input type="hidden" name="Order_Summary" id="orderSummaryInput" value="">
+        <input type="hidden" name="Grand_Total" id="grandTotalInput" value="$0.00">
+
         <div class="form-group">
-          <label for="name">Your Name</label>
-          <input type="text" id="name" name="name" placeholder="John Doe" required>
+          <label for="full-name">Full Name</label>
+          <input type="text" id="full-name" name="Name" placeholder="Your Name" required>
         </div>
 
         <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" placeholder="john@example.com" required>
+          <label for="email-address">Email Address</label>
+          <input type="email" id="email-address" name="Email" placeholder="your@email.com" required>
         </div>
 
         <div class="form-group">
-          <label for="item">Select Product</label>
-          <select id="item" name="requested_item">
-            <option value="Fresh Catch Selection">Fresh Catch Selection - $24.99</option>
-            <option value="Artisanal Market Basket">Artisanal Market Basket - $45.00</option>
-            <option value="Local Reserve Goods">Local Reserve Goods - $18.50</option>
-            <option value="Specialty Gift Box">Specialty Gift Box - $60.00</option>
-            <option value="General Inquiry">General Inquiry / Other</option>
-          </select>
+          <label for="phone-num">Phone Number</label>
+          <input type="tel" id="phone-num" name="Phone" placeholder="(000) 000-0000">
         </div>
 
         <div class="form-group">
-          <label for="message">Message / Details</label>
-          <textarea id="message" name="message" rows="5" placeholder="Specify quantities, preferred delivery dates, or custom requests..." required></textarea>
+          <label for="notes">Special Instructions or Delivery Notes</label>
+          <textarea id="notes" name="Notes" rows="3" placeholder="Add shipping details or custom request notes..."></textarea>
         </div>
 
-        <button type="submit" class="submit-btn">Send Order Request</button>
+        <button type="submit" class="submit-btn">Submit Order Request</button>
       </form>
     </div>
   </section>
 
   <footer>
-    <p>&copy; 2026 Lucas Seacoast Market. All rights reserved.</p>
+    <p>&copy; 2026 Luca's Seacoast Market, LLC. All rights reserved.</p>
   </footer>
 
+  <script>
+    function updateQty(button, change) {
+      const input = button.parentElement.querySelector('.qty-input');
+      let currentQty = parseInt(input.value) || 0;
+      currentQty += change;
+      if (currentQty < 0) currentQty = 0;
+      input.value = currentQty;
+      
+      recalculateCart();
+    }
+
+    function recalculateCart() {
+      const cards = document.querySelectorAll('.product-card');
+      const summaryItemsContainer = document.getElementById('summaryItems');
+      const emptyCartMsg = document.getElementById('emptyCartMsg');
+      const grandTotalElem = document.getElementById('grandTotal');
+      
+      summaryItemsContainer.innerHTML = '';
+      let total = 0;
+      let orderDetailsText = [];
+      let itemCount = 0;
+
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name');
+        const price = parseFloat(card.getAttribute('data-price'));
+        const qty = parseInt(card.querySelector('.qty-input').value) || 0;
+
+        if (qty > 0) {
+          itemCount++;
+          const itemTotal = price * qty;
+          total += itemTotal;
+
+          // Render line item in summary
+          const itemRow = document.createElement('div');
+          itemRow.className = 'summary-item';
+          itemRow.innerHTML = `
+            <span>${name} × ${qty}</span>
+            <span>$${itemTotal.toFixed(2)}</span>
+          `;
+          summaryItemsContainer.appendChild(itemRow);
+
+          orderDetailsText.push(`${name} (Qty: ${qty}) - $${itemTotal.toFixed(2)}`);
+        }
+      });
+
+      if (itemCount === 0) {
+        emptyCartMsg.style.display = 'block';
+      } else {
+        emptyCartMsg.style.display = 'none';
+      }
+
+      grandTotalElem.innerText = `$${total.toFixed(2)}`;
+
+      // Update hidden form inputs for Formspree submission
+      document.getElementById('orderSummaryInput').value = orderDetailsText.join(' | ');
+      document.getElementById('grandTotalInput').value = `$${total.toFixed(2)}`;
+    }
+
+    function prepareFormSubmission(e) {
+      const totalText = document.getElementById('grandTotalInput').value;
+      if (totalText === '$0.00') {
+        alert('Please select at least one item before submitting your order request.');
+        e.preventDefault();
+      }
+    }
+  </script>
 </body>
 </html>
