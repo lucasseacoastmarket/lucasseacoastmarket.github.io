@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucas Seacoast Market | Store</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- CSS RESET & VARIABLES --- */
+    :root {
+      --primary-color: #0d2538;
+      --accent-color: #c5a059;
+      --bg-color: #fdfbf7;
+      --card-bg: #ffffff;
+      --text-color: #2b2b2b;
+      --light-text: #666666;
+      --transition-speed: 0.4s;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Cormorant Garamond', serif;
+      letter-spacing: 1px;
+    }
+
+    /* --- HEADER & NAVIGATION --- */
+    header {
+      background-color: rgba(253, 251, 247, 0.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    nav a {
+      margin-left: 2rem;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      transition: color var(--transition-speed);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--accent-color);
+      transition: width var(--transition-speed) ease;
+    }
+
+    nav a:hover {
+      color: var(--accent-color);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* --- HERO SECTION --- */
+    .hero {
+      text-align: center;
+      padding: 5rem 1rem 3rem 1rem;
+      animation: fadeIn 1.2s ease-out;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--light-text);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background-color: var(--accent-color);
+      margin: 1.5rem auto;
+    }
+
+    /* --- STORE GRID SECTION --- */
+    .store-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .product-card {
+      background-color: var(--card-bg);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.05);
+      transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    /* Staggered animation delays for cards */
+    .product-card:nth-child(1) { animation-delay: 0.2s; }
+    .product-card:nth-child(2) { animation-delay: 0.4s; }
+    .product-card:nth-child(3) { animation-delay: 0.6s; }
+    .product-card:nth-child(4) { animation-delay: 0.8s; }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    }
+
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      background-color: #f0f0f0;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .product-card:hover img {
+      transform: scale(1.06);
+    }
+
+    .product-info {
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .product-title {
+      font-size: 1.4rem;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .product-price {
+      font-size: 1.1rem;
+      color: var(--accent-color);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .order-btn {
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      border: 1px solid var(--accent-color);
+      color: var(--primary-color);
+      background: transparent;
+      text-decoration: none;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      transition: all var(--transition-speed) ease;
+      cursor: pointer;
+    }
+
+    .order-btn:hover {
+      background-color: var(--accent-color);
+      color: #ffffff;
+    }
+
+    /* --- INQUIRY / FORMSPREE SECTION --- */
+    .inquiry-section {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      padding: 5rem 1.5rem;
+      margin-top: 5rem;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .inquiry-container {
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .inquiry-section h2 {
+      font-size: 2.8rem;
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .inquiry-section p {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent-color);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      border-radius: 2px;
+      transition: border-color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background-color: var(--accent-color);
+      color: #ffffff;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
+    }
+
+    .submit-btn:hover {
+      background-color: #b08d49;
+      transform: translateY(-2px);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: var(--light-text);
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+
+    /* --- ANIMATION KEYFRAMES --- */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo">Lucas Seacoast Market</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="store.html">Store</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Our Curated Market</h1>
+    <div class="divider"></div>
+    <p>Handcrafted selections and fresh, premium offerings from the Seacoast directly to your table.</p>
+  </section>
+
+  <main class="store-container">
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="image-wrapper">
+          <img src="images/item1.jpg" alt="Fresh Seacoast Catch" onerror="this.src='https://via.placeholder.com/400x300?text=Product+Image'">
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Fresh Catch Selection</h3>
+          <div class="product-price">$24.99</div>
+          <a href="#contact" class="order-btn">Inquire / Order</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="image-wrapper">
+          <img src="images/item2.jpg" alt="Artisanal Market Basket" onerror="this.src='https://via.placeholder.com/400x300?text=Product+Image'">
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Artisanal Market Basket</h3>
+          <div class="product-price">$45.00</div>
+          <a href="#contact" class="order-btn">Inquire / Order</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="image-wrapper">
+          <img src="images/item3.jpg" alt="Local Reserve Goods" onerror="this.src='https://via.placeholder.com/400x300?text=Product+Image'">
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Local Reserve Goods</h3>
+          <div class="product-price">$18.50</div>
+          <a href="#contact" class="order-btn">Inquire / Order</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="image-wrapper">
+          <img src="images/item4.jpg" alt="Seacoast Specialty Gift Box" onerror="this.src='https://via.placeholder.com/400x300?text=Product+Image'">
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Specialty Gift Box</h3>
+          <div class="product-price">$60.00</div>
+          <a href="#contact" class="order-btn">Inquire / Order</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <section class="inquiry-section" id="contact">
+    <div class="inquiry-container">
+      <h2>Place an Order or Inquiry</h2>
+      <p>Fill out the details below to request items or ask questions directly.</p>
+      
+      <form action="https://formspree.io/f/meeywaww" method="POST">
+        
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" placeholder="John Doe" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="john@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="item">Select Product</label>
+          <select id="item" name="requested_item">
+            <option value="Fresh Catch Selection">Fresh Catch Selection - $24.99</option>
+            <option value="Artisanal Market Basket">Artisanal Market Basket - $45.00</option>
+            <option value="Local Reserve Goods">Local Reserve Goods - $18.50</option>
+            <option value="Specialty Gift Box">Specialty Gift Box - $60.00</option>
+            <option value="General Inquiry">General Inquiry / Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message / Details</label>
+          <textarea id="message" name="message" rows="5" placeholder="Specify quantities, preferred delivery dates, or custom requests..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Send Order Request</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Lucas Seacoast Market. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
