@@ -165,6 +165,7 @@
     .product-card:nth-child(3) { animation-delay: 0.3s; }
     .product-card:nth-child(4) { animation-delay: 0.4s; }
     .product-card:nth-child(5) { animation-delay: 0.5s; }
+    .product-card:nth-child(6) { animation-delay: 0.6s; }
 
     .product-card:hover {
       transform: translateY(-8px);
@@ -185,6 +186,12 @@
       height: 100%;
       object-fit: cover;
       transition: transform 0.6s ease;
+    }
+
+    /* Specific uncropped style for vinegar image only */
+    .product-card img.uncropped-img {
+      object-fit: contain;
+      padding: 6px;
     }
 
     .product-card:hover img {
@@ -466,6 +473,21 @@
         </div>
       </div>
 
+      <div class="product-card" data-name="Maple Syrup Testers" data-price="5.00">
+        <div class="image-container">
+          <img src="maple-testers.jpg" alt="Maple Syrup Testers" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Maple+Syrup+Testers';">
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">Maple Syrup Testers</h3>
+          <div class="product-price">$5.00</div>
+          <div class="qty-picker">
+            <button class="qty-btn" onclick="updateQty(this, -1)">-</button>
+            <input type="number" class="qty-input" value="0" min="0" readonly>
+            <button class="qty-btn" onclick="updateQty(this, 1)">+</button>
+          </div>
+        </div>
+      </div>
+
       <div class="product-card" data-name="Pillar Candle" data-price="7.00">
         <div class="image-container">
           <img src="candle-pillar.jpg" alt="Pillar Candle" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Pillar+Candle';">
@@ -513,7 +535,7 @@
 
       <div class="product-card" data-name="Balsam Fir Vinegar All-Purpose Cleaner" data-price="7.00">
         <div class="image-container">
-          <img src="vinegar.jpeg" alt="Balsam Fir Vinegar Cleaner" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=All-Purpose+Cleaner';">
+          <img class="uncropped-img" src="vinegar.jpeg" alt="Balsam Fir Vinegar Cleaner" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=All-Purpose+Cleaner';">
         </div>
         <div class="product-details">
           <h3 class="product-title">Balsam Fir Vinegar Cleaner</h3>
@@ -624,7 +646,6 @@
           const itemTotal = price * qty;
           total += itemTotal;
 
-          // Render line item in summary
           const itemRow = document.createElement('div');
           itemRow.className = 'summary-item';
           itemRow.innerHTML = `
@@ -645,7 +666,6 @@
 
       grandTotalElem.innerText = `$${total.toFixed(2)}`;
 
-      // Update hidden form inputs for Formspree submission
       document.getElementById('orderSummaryInput').value = orderDetailsText.join(' | ');
       document.getElementById('grandTotalInput').value = `$${total.toFixed(2)}`;
     }
